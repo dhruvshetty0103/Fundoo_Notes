@@ -1,8 +1,15 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import '../css/registration.scss'
 import accounts from '../assets/accounts.png'
 import RainbowText from 'react-rainbow-text'
+import {
+  validPassword,
+  validEmail,
+  validFirstName,
+  validLastName,
+} from './formValidation'
 import Button from '@mui/material/Button'
+import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
@@ -14,14 +21,36 @@ import { Link } from 'react-router-dom'
 const theme = createTheme()
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [firstNameError, setFirstNameError] = useState(false)
+  const [lastNameError, setLastNameError] = useState(false)
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+  const [confirmPasswordError, setPasswordConfirmError] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setFirstNameError(false)
+    setLastNameError(false)
+    setEmailError(false)
+    setPasswordError(false)
+    setPasswordConfirmError(false)
+    if (!validFirstName.test(firstName)) setFirstNameError(true)
+    if (!validLastName.test(lastName)) setLastNameError(true)
+    if (!validEmail.test(email)) setEmailError(true)
+    if (!validPassword.test(password)) setPasswordError(true)
+    if (password !== confirmPassword) {
+      setPasswordConfirmError(true)
+    }
   }
 
   return (
@@ -50,6 +79,9 @@ export default function SignUp() {
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  error={firstNameError}
+                  helperText={firstNameError ? 'Invalid first name' : ''}
+                  onChange={(e) => setFirstName(e.target.value)}
                   autoFocus
                 />
               </Grid>
@@ -60,6 +92,9 @@ export default function SignUp() {
                   name="lastName"
                   id="lastName"
                   label="Last Name"
+                  error={lastNameError}
+                  helperText={lastNameError ? 'Invalid last name' : ''}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -71,19 +106,34 @@ export default function SignUp() {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  error={emailError}
+                  helperText={
+                    emailError
+                      ? 'Invalid email'
+                      : 'You can use letters,numbers & periods'
+                  }
+                  onChange={(e) => setEmail(e.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">@gmail.com</InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   required
                   fullWidth
+                  id="password"
                   name="password"
                   label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={(e) => setPassword(e.target.value)}
+                  error={passwordError}
                   helperText={
-                    'Use 8 or more characters with a mix of letters, numbers & symbols'
+                    passwordError
+                      ? 'Invalid password'
+                      : 'Use 8 or more characters with a mix of letters, numbers & symbols'
                   }
                 />
               </Grid>
@@ -91,17 +141,22 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  id="confirmPassword"
                   name="confirmPassword"
                   label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="new-password"
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  error={confirmPasswordError}
+                  helperText={
+                    confirmPasswordError ? 'Password doesnt match' : ''
+                  }
                 />
               </Grid>
               <Grid item xs={12} align="left">
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Show password"
+                  onClick={handleShowPassword}
                 />
               </Grid>
               <Grid item xs={6} align="left">
