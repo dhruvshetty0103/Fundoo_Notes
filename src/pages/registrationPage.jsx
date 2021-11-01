@@ -1,16 +1,16 @@
 import * as React from 'react'
-import '../css/style.css'
+import '../css/registration.scss'
 import accounts from '../assets/accounts.png'
 import RainbowText from 'react-rainbow-text'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Link from '@mui/material/Link'
 import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Link } from 'react-router-dom'
 const theme = createTheme()
 
 export default function SignUp() {
