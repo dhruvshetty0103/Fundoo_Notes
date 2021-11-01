@@ -11,8 +11,21 @@ import {
 } from '@mui/material'
 import '../css/login.scss'
 const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setEmailError(false)
+    setPasswordError(false)
+    if (email === '') setEmailError(true)
+    if (password === '') setPasswordError(true)
+  }
+
   return (
-    <form id="login-form" autoComplete="off">
+    <form id="login-form" onSubmit={handleSubmit} autoComplete="off">
       <Paper elevation={5} sx={{ p: 4 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -33,7 +46,10 @@ const Login = () => {
               id="email"
               label="Email"
               variant="outlined"
+              error={emailError}
+              helperText={emailError ? 'Email cannot be empty' : ''}
               fullWidth
+              onChange={(e) => setEmail(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">@gmail.com</InputAdornment>
@@ -48,6 +64,9 @@ const Login = () => {
               type="password"
               variant="outlined"
               fullWidth
+              onChange={(e) => setPassword(e.target.value)}
+              error={passwordError}
+              helperText={passwordError ? 'Password cannot be empty' : ''}
             />
           </Grid>
           <Grid item xs={6} align="left">

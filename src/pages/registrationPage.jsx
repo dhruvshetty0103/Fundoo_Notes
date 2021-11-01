@@ -127,6 +127,7 @@ export default function SignUp() {
                   id="password"
                   name="password"
                   label="Password"
+                  variant="outlined"
                   type={showPassword ? 'text' : 'password'}
                   onChange={(e) => setPassword(e.target.value)}
                   error={passwordError}
