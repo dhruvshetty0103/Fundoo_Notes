@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../css/registration.scss'
+import userService from '../service/userService'
 import accounts from '../assets/accounts.png'
 import RainbowText from 'react-rainbow-text'
 import {
@@ -7,25 +8,29 @@ import {
   validEmail,
   validFirstName,
   validLastName,
-} from './formValidation'
-import Button from '@mui/material/Button'
-import InputAdornment from '@mui/material/InputAdornment'
-import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
-import Typography from '@mui/material/Typography'
+} from '../config/FormValidation'
+import {
+  Button,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Paper,
+  Typography
+}  from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Link } from 'react-router-dom'
 const theme = createTheme()
 
 export default function SignUp() {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const initialUserState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  }
+  const [user, setUser] = useState(initialUserState)
   const [firstNameError, setFirstNameError] = useState(false)
   const [lastNameError, setLastNameError] = useState(false)
   const [emailError, setEmailError] = useState(false)
@@ -37,19 +42,59 @@ export default function SignUp() {
     setShowPassword(!showPassword)
   }
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    setUser({ ...user, [name]: value })
+  }
+
   const handleSubmit = (e) => {
+    let errorFlag = false
     e.preventDefault()
     setFirstNameError(false)
     setLastNameError(false)
     setEmailError(false)
     setPasswordError(false)
     setPasswordConfirmError(false)
-    if (!validFirstName.test(firstName)) setFirstNameError(true)
-    if (!validLastName.test(lastName)) setLastNameError(true)
-    if (!validEmail.test(email)) setEmailError(true)
-    if (!validPassword.test(password)) setPasswordError(true)
-    if (password !== confirmPassword) {
+    if (!validFirstName.test(user.firstName)) {
+      errorFlag = true
+      setFirstNameError(true)
+    }
+    if (!validLastName.test(user.lastName)) {
+      errorFlag = true
+      setLastNameError(true)
+    }
+    if (!validEmail.test(user.email)) {
+      errorFlag = true
+      setEmailError(true)
+    }
+    if (!validPassword.test(user.password)) {
+      errorFlag = true
+      setPasswordError(true)
+    }
+    if (user.password !== user.confirmPassword) {
+      errorFlag = true
       setPasswordConfirmError(true)
+    }
+
+    if (errorFlag) {
+      console.log('Enter the correct details')
+    } else {
+      let data = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+      }
+      userService
+        .register(data)
+        .then((response) => {
+          console.log('Registered successfully')
+          console.log(response.data)
+        })
+        .catch((e) => {
+          console.log('Registeration failed')
+          console.log(e)
+        })
     }
   }
 
@@ -81,7 +126,8 @@ export default function SignUp() {
                   label="First Name"
                   error={firstNameError}
                   helperText={firstNameError ? 'Invalid first name' : ''}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  value={user.firstName}
+                  onChange={handleInputChange}
                   autoFocus
                 />
               </Grid>
@@ -94,7 +140,8 @@ export default function SignUp() {
                   label="Last Name"
                   error={lastNameError}
                   helperText={lastNameError ? 'Invalid last name' : ''}
-                  onChange={(e) => setLastName(e.target.value)}
+                  value={user.lastName}
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -112,12 +159,8 @@ export default function SignUp() {
                       ? 'Invalid email'
                       : 'You can use letters,numbers & periods'
                   }
-                  onChange={(e) => setEmail(e.target.value)}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">@gmail.com</InputAdornment>
-                    ),
-                  }}
+                  value={user.email}
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -129,7 +172,8 @@ export default function SignUp() {
                   label="Password"
                   variant="outlined"
                   type={showPassword ? 'text' : 'password'}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={user.password}
+                  onChange={handleInputChange}
                   error={passwordError}
                   helperText={
                     passwordError
@@ -146,7 +190,8 @@ export default function SignUp() {
                   name="confirmPassword"
                   label="Confirm Password"
                   type={showPassword ? 'text' : 'password'}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={user.confirmPassword}
+                  onChange={handleInputChange}
                   error={confirmPasswordError}
                   helperText={
                     confirmPasswordError ? 'Password doesnt match' : ''
