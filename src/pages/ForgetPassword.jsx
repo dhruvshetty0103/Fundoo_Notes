@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import userService from "../service/userService";
 import { Link } from "react-router-dom";
 import { Grid, TextField, Typography, Button, Paper } from "@mui/material";
-import "../css/form.scss";
+import "../styles/form.scss";
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -42,7 +42,7 @@ const ForgetPassword = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">Find your Fundoo Note password</Typography>
+            <Typography variant="h5">Reset your Fundoo Note password</Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="p">Enter your Fundoo Note email</Typography>

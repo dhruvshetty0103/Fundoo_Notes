@@ -5,6 +5,7 @@ import ForgetPassword from './pages/ForgetPassword'
 import ResetPassWord from './pages/ResetPassword'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" exact component={RegisterationPage} />
         <Route path="/login" component={Login} />
         <Route path="/forgot" component={ForgetPassword} />
-        <Route path="/reset/:token"  component={ResetPassWord} />
+        <Route path="/reset/:token" component={ResetPassWord} />
+        <Route path="/dashboard" component={Dashboard} />
       </Router>
     </div>
   )

@@ -10,7 +10,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import "../css/form.scss";
+import "../styles/form.scss";
 const ResetPassWord = () => {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);

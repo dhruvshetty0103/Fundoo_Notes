@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from 'axios'
 // Send a POST request
 const post = (requestObject) => {
   return axios({
@@ -6,6 +6,15 @@ const post = (requestObject) => {
     url: requestObject.url,
     headers: requestObject.headers,
     data: requestObject.data,
-  });
-};
-export default {post};
+  })
+}
+const get = (requestObject) => {
+  return axios({
+    method: requestObject.method,
+    url: requestObject.url,
+    headers: requestObject.headers,
+  })
+}
+
+/* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
+export default { post, get }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../css/registration.scss'
+import '../styles/registration.scss'
 import userService from '../service/userService'
 import accounts from '../assets/accounts.png'
 import RainbowText from 'react-rainbow-text'
@@ -17,7 +17,7 @@ import {
   Grid,
   Paper,
   Typography
-}  from '@mui/material'
+} from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Link } from 'react-router-dom'
 const theme = createTheme()
@@ -102,7 +102,7 @@ export default function SignUp() {
     <form id="registeration-form" onSubmit={handleSubmit} autoComplete="off">
       <Paper elevation={5} sx={{ p: 2 }}>
         <ThemeProvider theme={theme}>
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             <Grid item container xs={8} spacing={1}>
               <Grid item xs={12}>
                 <Typography variant="h3" align="left">
@@ -116,7 +116,7 @@ export default function SignUp() {
                   Sign Up
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={6} >
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
