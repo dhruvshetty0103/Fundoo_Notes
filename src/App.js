@@ -1,6 +1,6 @@
 import './App.css'
 import RegisterationPage from './pages/RegisterationPage.jsx'
-import Login from './pages/Login.jsx'
+import Login from './pages/login.jsx'
 import ForgetPassword from './pages/ForgetPassword'
 import ResetPassWord from './pages/ResetPassword'
 
