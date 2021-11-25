@@ -1,5 +1,5 @@
 .main-container {
-  margin: 5% auto;
+  margin: 3% auto;
   width: 85%;
 }
 
@@ -9,4 +9,17 @@
   display: flex;
   padding: 4px;
   margin: auto;
+}
+
+.note-container {
+  flex-grow: 1;
+  padding: 3;
+  margin: 5% auto;
+}
+
+.add-note-container {
+  width: 50%;
+  margin: 3% auto;
+  padding: 0 2% 0 2%;
+  border-radius: 8px;
 }
