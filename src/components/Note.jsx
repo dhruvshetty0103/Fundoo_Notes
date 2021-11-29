@@ -59,7 +59,7 @@ import {
   
     const action = (
       <React.Fragment>
-        <Button size="small" onClick={handleRestore} style={{color:"yellow"}}>
+        <Button size="small" onClick={handleRestore} style={{ color: "yellow" }}>
           UNDO
         </Button>
         <IconButton
@@ -93,6 +93,7 @@ import {
             return (
               <Grid item xs={12} md={listView ? 8 : 3} key={item._id}>
                 <Card
+                style={{ background: item.color }}
                   elevation={hover[index] ? 6 : 1}
                   onMouseEnter={() => {
                     setHover({ [index]: true });
@@ -102,7 +103,16 @@ import {
                   }}
                 >
                   <CardContent onClick={() => handleUpdate(item, index)}>
-                    <Typography variant="h5">{item.title}</Typography>
+                  <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                    {item.title}
+                  </Typography>
+                  <Typography
+                    style={{
+                      overflow: "hidden",
+                      height: "3em",
+                    }}
+                    color="text.secondary"
+                  ></Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       {item.content}
                     </Typography>
@@ -114,7 +124,7 @@ import {
                       handleOpenSnackBar={handleOpenSnackBar}
                     />
                   ) : (
-                    <div style={{ height: "35px" }}></div>
+                    <div style={{ height: "40px" }}></div>
                   )}
                 </Card>
               </Grid>

@@ -58,7 +58,7 @@ import {
   
     const handleDelete = () => {
       noteService
-        .deletNote(deleteItem._id)
+        .deleteNote(deleteItem._id)
         .then((res) => {
           if (res.data.status === 200) {
             dispatch(deleteNote(deleteItem));
