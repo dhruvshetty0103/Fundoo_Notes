@@ -76,5 +76,24 @@ const deleteNote = (id) => {
     });
 };
 
+const setImage = (data) => {
+  const token = localStorage.getItem("token");
+  let reqobj = {
+    method: "post",
+    url: "http://localhost:4000/upload-image",
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+    data: data,
+  };
+  return AxiosHelper.post(reqobj)
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
-export default { getNotes,setNotes,updateNotes,deleteNote }
+export default { getNotes,setNotes,updateNotes,deleteNote,setImage }
