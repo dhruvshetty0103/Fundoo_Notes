@@ -73,7 +73,6 @@ const Dashboard = () => {
         <Box component="main" className="note-container">
           {renderOption()}
         </Box>
-      {renderOption()}
       </Box>
     );
   }
