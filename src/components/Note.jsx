@@ -117,10 +117,7 @@ const Note = () => {
                     {item.title}
                   </Typography>
                   <Typography
-                    style={{
-                      overflow: "hidden",
-                      height: "3em",
-                    }}
+                   className="item-content"
                     color="text.secondary"
                   >
                     {item.content}

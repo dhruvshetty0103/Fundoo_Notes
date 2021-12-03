@@ -44,7 +44,7 @@ const Login = () => {
         .login(data)
         .then((response) => {
           if (response.data.status === 200) {
-            
+            localStorage.setItem("Account",data.email)
             localStorage.setItem('token', response.data.message.Token)
             console.log("Login successfully");
             setSuccess(true)
